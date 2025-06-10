@@ -166,7 +166,7 @@ matchmaking:
 #     tc: 0.5+1
 #     rated: false
 #     variant: chess960
-    optional_settings:
+  optional_settings:
       rated: true                         # Whether matchmaking should play rated games. Default: true
 #     variant: standard                   # Chess variant (https://lichess.org/variant) to challenge. Default: standard
 #     weight: 100                         # Weight with which this type is selected. Default: Types are played according to their time control.
