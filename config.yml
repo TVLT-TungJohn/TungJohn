@@ -143,8 +143,8 @@ challenge:                                # Incoming challenges. (Commenting all
 #   - racingKings
 #   - threeCheck
   time_controls:                          # Speeds or time controls in initial_minutes+increment_seconds format to accept.
-    - 0.5+0
-#   - bullet
+    - 1+0
+    - bullet
 #   - blitz
 #   - rapid
 #   - classical
