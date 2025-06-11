@@ -69,8 +69,9 @@ opening_books:
 #     max_depth: 16                       # Half move max depth. (Comment this line for max depth)
       names:                              # List of names of books to use if there is no specific book for the time control, white, black or chess960.
        - Perfect2025
-       - Perfect2023
        - optimus2409
+       - optimus32
+       - Komodo
        - Titans
 #   Use the same pattern for 'bullet', 'blitz', 'rapid', 'classical',
 #   'antichess', 'atomic', 'chess960', 'crazyhouse', 'horde', 'kingofthehill', 'racingkings' and '3check' as well.
