@@ -68,6 +68,9 @@ opening_books:
       selection: best_move          # Move selection is one of "weighted_random", "uniform_random" or "best_move".
 #     max_depth: 16                       # Half move max depth. (Comment this line for max depth)
       names:                              # List of names of books to use if there is no specific book for the time control, white, black or chess960.
+       - Perfect2025
+       - Perfect2023
+       - optimus2409
        - Titans
 #   Use the same pattern for 'bullet', 'blitz', 'rapid', 'classical',
 #   'antichess', 'atomic', 'chess960', 'crazyhouse', 'horde', 'kingofthehill', 'racingkings' and '3check' as well.
@@ -201,4 +204,5 @@ books:                                    # Names of the opening books (to be us
   optimus2409: "./engines/optimus2409.bin"
   optimus32:  "./engines/optimus32.bin"
   Perfect2023: "./engines/Perfect2023.bin"
-  Komodo: "./engines/Komodo.bin"
+  Perfect2025: "./engines/Perfect2025.bin"
+  Komodo: "./engines/komodo.bin"
