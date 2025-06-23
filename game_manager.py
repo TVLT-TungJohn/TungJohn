@@ -169,18 +169,18 @@ class Game_Manager:
         if tournament := self.unstarted_tournaments.pop(tournament_id, None):
             tournament.cancel()
             print(f'Removed unstarted tournament "{tournament.name}".')
-            return
 
         if tournament := self.tournaments.pop(tournament_id, None):
             await self.api.withdraw_tournament(tournament_id)
             tournament.cancel()
             print(f'Left tournament "{tournament.name}".')
-            return
 
         for tournament in list(self.tournaments_to_join):
             if tournament.id_ == tournament_id:
                 self.tournaments_to_join.remove(tournament)
                 print(f'Removed unjoined tournament "{tournament.name}".')
+
+        self._set_next_matchmaking(1)
 
     async def _tournament_start_task(self, tournament: Tournament) -> None:
         await asyncio.sleep(tournament.seconds_to_start)
@@ -219,13 +219,6 @@ class Game_Manager:
     async def _start_game(self, game_event: dict[str, Any]) -> None:
         if self.reserved_game_spots > 0:
             self.reserved_game_spots -= 1
-
-        if 'tournamentId' in game_event and game_event['tournamentId'] not in self.tournaments:
-            tournament_info = await self.api.get_tournament_info(game_event['tournamentId'])
-            tournament = Tournament.from_tournament_info(tournament_info)
-            tournament.end_task = asyncio.create_task(self._tournament_end_task(tournament))
-            self.tournaments[tournament.id_] = tournament
-            print(f'External joined tournament "{tournament.name}" detected.')
 
         game = Game(self.api, self.config, self.username, game_event['id'])
         task = asyncio.create_task(game.run())
