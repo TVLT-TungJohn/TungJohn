@@ -1,7 +1,7 @@
 token: TokenTimeIsBackBuddyss             # Lichess OAuth2 Token.
 
 engines:
-  standard:                               # Engine used for standard chess and when no suitable special engine is configured.
+  blitz:                               # Engine used for standard chess and when no suitable special engine is configured.
     dir: "./engines"                      # Directory containing the engine.
     name: "stockfish"                     # Binary name of the engine to use.
     ponder: true                          # Think on opponent's time.
@@ -11,7 +11,7 @@ engines:
       Threads: 8                          # Max CPU threads the engine can use.
       Hash: 4096                          # Max memory (in megabytes) the engine can allocate.
       Move Overhead: 100                  # Increase if your bot flags games too often.
-#   limits:                               # Limits that end the move calculation early.
+    limits:                              # Limits that end the move calculation early.
 #     time: 5.0                           # Max time per move in seconds.
 #     depth: 50                           # Max depth per move.
 #     nodes: 30000000000                  # Max nodes per move.
