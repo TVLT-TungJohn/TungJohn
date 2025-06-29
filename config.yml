@@ -1,14 +1,28 @@
 token: TokenTimeIsBackBuddyss             # Lichess OAuth2 Token.
 
 engines:
-  blitz:                               # Engine used for standard chess and when no suitable special engine is configured.
+  bullet:
     dir: "./engines"                      # Directory containing the engine.
     name: "stockfish"                     # Binary name of the engine to use.
     ponder: true                          # Think on opponent's time.
     silence_stderr: false                 # Suppresses stderr output.
-    move_overhead_multiplier: 5.25        # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
+    move_overhead_multiplier: 4.0         # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
     uci_options:                          # Arbitrary UCI options passed to the engine. (Commenting allowed)
-      Threads: 8                          # Max CPU threads the engine can use.
+      Threads: 6                          # Max CPU threads the engine can use.
+      Hash: 1096                          # Max memory (in megabytes) the engine can allocate.
+      Move Overhead: 100                  # Increase if your bot flags games too often.
+    limits:                               # Limits that end the move calculation early.
+#     time: 5.0                           # Max time per move in seconds.
+#     depth: 50                           # Max depth per move.
+#     nodes: 30000000000                  # Max nodes per move.
+  blitz:                                  # Engine used for standard chess and when no suitable special engine is configured.
+    dir: "./engines"                      # Directory containing the engine.
+    name: "stockfish"                     # Binary name of the engine to use.
+    ponder: true                          # Think on opponent's time.
+    silence_stderr: false                 # Suppresses stderr output.
+    move_overhead_multiplier: 3.0         # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
+    uci_options:                          # Arbitrary UCI options passed to the engine. (Commenting allowed)
+      Threads: 6                          # Max CPU threads the engine can use.
       Hash: 4096                          # Max memory (in megabytes) the engine can allocate.
       Move Overhead: 100                  # Increase if your bot flags games too often.
     limits:                              # Limits that end the move calculation early.
