@@ -169,12 +169,12 @@ class Chatter:
 
         max_score = config.offer_draw.score / 100
 
-        return (f'The bot offers draw at move {config.offer_draw.min_game_length} or later '
+        return (f'I can't draw at {config.offer_draw.min_game_length} or later '
                 f'if the eval is within +{max_score:.2f} to -{max_score:.2f} for the last '
                 f'{config.offer_draw.consecutive_moves} moves.')
 
     def _get_name_message(self, version: str) -> str:
-        return (f'{self.username} running {self.lichess_game.engine.name} (BotLi {version})')
+        return (f'Nahh Cooked')
 
     def _format_message(self, message: str | None) -> str | None:
         if not message:
