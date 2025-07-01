@@ -77,7 +77,7 @@ class Chatter:
 
     async def send_abortion_message(self) -> None:
         await self.api.send_chat_message(self.game_info.id_, 'player', ('Too bad you weren\'t there. '
-                                                                        'Feeling feared, '
+                                                                        'Feel free to challenge me again, '
                                                                         'I will accept the challenge if possible.'))
 
     async def _handle_command(self, chat_message: Chat_Message) -> None:
@@ -103,7 +103,7 @@ class Chatter:
                 self.print_eval_rooms.add(chat_message.room)
                 await self.api.send_chat_message(self.game_info.id_,
                                                  chat_message.room,
-                                                 'Do to want me to be !quiet?.')
+                                                 'Type !quiet to stop eval printing.')
                 await self._send_last_message(chat_message.room)
             case 'quiet':
                 self.print_eval_rooms.discard(chat_message.room)
@@ -119,9 +119,9 @@ class Chatter:
                 await self.api.send_chat_message(self.game_info.id_, chat_message.room, self.ram_message)
             case 'help' | 'commands':
                 if chat_message.room == 'player':
-                    message = 'Supported commands: I Am not sure what was here '
+                    message = 'Supported commands: !cpu, !draw, !eval, !motor, !name, !printeval, !ram'
                 else:
-                    message = 'Supported commands: I Am not sure what was here '
+                    message = 'Supported commands: !cpu, !draw, !eval, !motor, !name, !printeval, !pv, !ram'
 
                 await self.api.send_chat_message(self.game_info.id_, chat_message.room, message)
 
@@ -169,12 +169,12 @@ class Chatter:
 
         max_score = config.offer_draw.score / 100
 
-        return (f'I can't draw at {config.offer_draw.min_game_length} or later '
+        return (f'The bot offers draw at move {config.offer_draw.min_game_length} or later '
                 f'if the eval is within +{max_score:.2f} to -{max_score:.2f} for the last '
                 f'{config.offer_draw.consecutive_moves} moves.')
 
     def _get_name_message(self, version: str) -> str:
-        return (f'Nahh Cooked')
+        return (f'{self.username} running {self.lichess_game.engine.name} (BotLi {version})')
 
     def _format_message(self, message: str | None) -> str | None:
         if not message:
