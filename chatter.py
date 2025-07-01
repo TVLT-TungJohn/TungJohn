@@ -77,7 +77,7 @@ class Chatter:
 
     async def send_abortion_message(self) -> None:
         await self.api.send_chat_message(self.game_info.id_, 'player', ('Too bad you weren\'t there. '
-                                                                        'Feel free to challenge me again, '
+                                                                        'Feeling feared, '
                                                                         'I will accept the challenge if possible.'))
 
     async def _handle_command(self, chat_message: Chat_Message) -> None:
@@ -103,7 +103,7 @@ class Chatter:
                 self.print_eval_rooms.add(chat_message.room)
                 await self.api.send_chat_message(self.game_info.id_,
                                                  chat_message.room,
-                                                 'Type !quiet to stop eval printing.')
+                                                 'Do to want me to be !quiet?.')
                 await self._send_last_message(chat_message.room)
             case 'quiet':
                 self.print_eval_rooms.discard(chat_message.room)
@@ -119,9 +119,9 @@ class Chatter:
                 await self.api.send_chat_message(self.game_info.id_, chat_message.room, self.ram_message)
             case 'help' | 'commands':
                 if chat_message.room == 'player':
-                    message = 'Supported commands: !cpu, !draw, !eval, !motor, !name, !printeval, !ram'
+                    message = 'Supported commands: I Am not sure what was here '
                 else:
-                    message = 'Supported commands: !cpu, !draw, !eval, !motor, !name, !printeval, !pv, !ram'
+                    message = 'Supported commands: I Am not sure what was here '
 
                 await self.api.send_chat_message(self.game_info.id_, chat_message.room, message)
 
