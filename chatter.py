@@ -174,7 +174,7 @@ class Chatter:
                 f'{config.offer_draw.consecutive_moves} moves.')
 
     def _get_name_message(self, version: str) -> str:
-        return (f'Runs on Botli')
+        return (f'{self.username} running {self.lichess_game.engine.name} (BotLi {version})')
 
     def _format_message(self, message: str | None) -> str | None:
         if not message:

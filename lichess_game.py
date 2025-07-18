@@ -97,6 +97,13 @@ class Lichess_Game:
                     return 'chess960'
 
             else:
+                if game_info.white_title != 'BOT' or game_info.black_title != 'BOT':
+                    if f'humans_{color}' in config.engines:
+                        return f'humans_{color}'
+
+                    if 'humans' in config.engines:
+                        return 'humans'
+
                 if f'{game_info.speed}_{color}' in config.engines:
                     return f'{game_info.speed}_{color}'
 
@@ -335,6 +342,13 @@ class Lichess_Game:
                 return 'chess960'
 
         else:
+            if self.game_info.white_title != 'BOT' or self.game_info.black_title != 'BOT':
+                if f'humans_{color}' in self.config.opening_books.books:
+                    return f'humans_{color}'
+
+                if 'humans' in self.config.opening_books.books:
+                    return 'humans'
+
             if f'{self.game_info.speed}_{color}' in self.config.opening_books.books:
                 return f'{self.game_info.speed}_{color}'
 
@@ -501,6 +515,9 @@ class Lichess_Game:
             asyncio.create_task(self.api.queue_chessdb(fen))
             self.out_of_chessdb_counter += 1
             return
+
+        if len(response['moves']) < 5 <= self.board.legal_moves.count():
+            asyncio.create_task(self.api.queue_chessdb(fen))
 
         self.out_of_chessdb_counter = 0
         if self.config.online_moves.chessdb.selection == 'optimal' or response['moves'][0]['rank'] == 0:
@@ -870,7 +887,8 @@ class Lichess_Game:
 
         if self.config.online_moves.lichess_cloud.enabled:
             if not self.config.online_moves.lichess_cloud.only_without_book or not self.book_settings.readers:
-                opening_sources[self._make_cloud_move] = self.config.online_moves.lichess_cloud.priority
+                if self.board.uci_variant == 'chess' or self.config.online_moves.lichess_cloud.use_for_variants:
+                    opening_sources[self._make_cloud_move] = self.config.online_moves.lichess_cloud.priority
 
         if self.config.online_moves.chessdb.enabled:
             if not self.config.online_moves.chessdb.only_without_book or not self.book_settings.readers:

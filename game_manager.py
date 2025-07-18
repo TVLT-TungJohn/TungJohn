@@ -131,7 +131,13 @@ class Game_Manager:
         self.changed_event.set()
 
     async def _process_tournament_request(self, tournament_request: Tournament_Request) -> None:
+        if tournament_request.id_ in self.unstarted_tournaments:
+            return
+
         if tournament_request.id_ in self.tournaments:
+            return
+
+        if tournament_request.id_ in {tournament.id_ for tournament in self.tournaments_to_join}:
             return
 
         tournament_info = await self.api.get_tournament_info(tournament_request.id_)
@@ -213,12 +219,24 @@ class Game_Manager:
             self.matchmaking.on_game_finished(game.was_aborted)
             self.current_matchmaking_game_id = None
 
+        if game.ejected_tournament in self.tournaments:
+            self.tournaments[game.ejected_tournament].cancel()
+            del self.tournaments[game.ejected_tournament]
+            print(f'Ignoring tournament "{game.ejected_tournament}" after failure to start the game.')
+
         self._set_next_matchmaking(self.config.matchmaking.delay)
         self.changed_event.set()
 
     async def _start_game(self, game_event: dict[str, Any]) -> None:
         if self.reserved_game_spots > 0:
             self.reserved_game_spots -= 1
+
+        if 'tournamentId' in game_event and game_event['tournamentId'] not in self.tournaments:
+            tournament_info = await self.api.get_tournament_info(game_event['tournamentId'])
+            tournament = Tournament.from_tournament_info(tournament_info)
+            tournament.end_task = asyncio.create_task(self._tournament_end_task(tournament))
+            self.tournaments[tournament.id_] = tournament
+            print(f'External joined tournament "{tournament.name}" detected.')
 
         game = Game(self.api, self.config, self.username, game_event['id'])
         task = asyncio.create_task(game.run())
@@ -237,8 +255,6 @@ class Game_Manager:
     async def _accept_challenge(self, challenge: Challenge) -> None:
         if await self.api.accept_challenge(challenge.challenge_id):
             self.reserved_game_spots += 1
-        else:
-            print(f'Challenge "{challenge.challenge_id}" could not be accepted!')
 
     async def _check_matchmaking(self) -> None:
         self.next_matchmaking = None
