@@ -9,7 +9,7 @@ engines:
     move_overhead_multiplier: 21.0        # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
     uci_options:                          # Arbitrary UCI options passed to the engine. (Commenting allowed)
       Threads: 8                          # Max CPU threads the engine can use.
-      Hash: 4096                          # Max memory (in megabytes) the engine can allocate.
+      Hash: 2048                          # Max memory (in megabytes) the engine can allocate.
       Move Overhead: 100                  # Increase if your bot flags games too often.
     limits:                               # Limits that end the move calculation early.
 #     time: 2.5                           # Max time per move in seconds.
