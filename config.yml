@@ -3,10 +3,10 @@ token: "XXXXXXXXXXXXXXXXXXXXXXXX"         # Lichess OAuth2 Token.
 engines:
   standard:                               # Engine used for standard chess and when no suitable special engine is configured.
     dir: "./engines"                      # Directory containing the engine.
-    name: "stockfish.exe"                 # Binary name of the engine to use.
+    name: "stockfish"                     # Binary name of the engine to use.
     ponder: true                          # Think on opponent's time.
     silence_stderr: false                 # Suppresses stderr output.
-    move_overhead_multiplier: 20.0        # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
+    move_overhead_multiplier: 21.0        # Increase if your bot flags games too often. Default move overhead is 1 second per 1 minute initital time.
     uci_options:                          # Arbitrary UCI options passed to the engine. (Commenting allowed)
       Threads: 8                          # Max CPU threads the engine can use.
       Hash: 4096                          # Max memory (in megabytes) the engine can allocate.
@@ -206,13 +206,13 @@ messages:
   greeting_spectators: "Hey, I'm running {engine}. Type !help for a list of commands." # Message sent to the spectators at the beginning of a game.
   goodbye_spectators: "Thanks for watching."                                           # Message sent to the spectators after the end of a game.
 
-# whitelist:                              # List of users whose challenges are always accepted.
-#   - Username1
-#   - Username2
+whitelist:                                 # List of users whose challenges are always accepted.
+# - Username1
+# - Username2
 
-# blacklist:                              # List of users who are not challenged and whose challenges are declined.
-#   - Username1
-#   - Username2
+blacklist:                                 # List of users who are not challenged and whose challenges are declined.
+# - Username1
+# - Username2
 
 books:                                    # Names of the opening books (to be used above in the opening_books section) and paths to the opening books.
   Titans: "engines/Titans.bin"
