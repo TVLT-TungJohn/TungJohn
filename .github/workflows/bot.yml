@@ -47,17 +47,19 @@ jobs:
       - name: Make Stockfish Executable
         run: | 
              chmod +x ./engines/stockfish
+             
       - name: Run Bot
         run: |
-          echo "Starting bot..."
-          python3 -u user_interface.py "matchmaking" &
-          PID=$!
-          
-          # Auto-exit after 350 minutes (so restart runs without overlap)
-          ( sleep 21000 && echo "Time up. Killing bot..." && kill -SIGTERM $PID ) &
-          
-          wait $PID
-          echo "Bot ended cleanly."
+              echo "Starting bot..."
+              python3 -u user_interface.py matchmaking &
+              PID=$!
+
+              # Stop bot gracefully at 350 minutes = 21000 seconds
+              (sleep 21000 && echo "Time up. Sending graceful shutdown..." && kill -SIGTERM $PID) &
+
+              wait $PID
+              echo "Bot exited gracefully after finishing all games."
+              
       - name: 🔁 Self-Restart (Fire-and-Forget)
         if: always()
         run: gh workflow run bot.yml
