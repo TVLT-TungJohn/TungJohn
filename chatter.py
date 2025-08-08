@@ -29,6 +29,7 @@ class Chatter:
         self.name_message = self._get_name_message(getattr(config, "version", "unknown"))
         self.ram_message = self._get_ram()
         self.player_greeting = self._format_message(getattr(config.messages, 'greeting', None))
+        self.player_greeting_vi = self._format_message(getattr(config.messages, 'greeting_vi', None))
         self.player_goodbye = self._format_message(getattr(config.messages, 'goodbye', None))
         self.spectator_greeting = self._format_message(getattr(config.messages, 'greeting_spectators', None))
         self.spectator_goodbye = self._format_message(getattr(config.messages, 'goodbye_spectators', None))
@@ -70,6 +71,7 @@ class Chatter:
     async def send_greetings(self) -> None:
         if self.player_greeting:
             await self.api.send_chat_message(self.game_info.id_, 'player', self.player_greeting)
+            await self.api.send_chat_message(self.game_info.id_, 'player', self.player_greeting_vi)
         if self.spectator_greeting:
             await self.api.send_chat_message(self.game_info.id_, 'spectator', self.spectator_greeting)
 
